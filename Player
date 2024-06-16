@@ -1,0 +1,63 @@
+extends Area2D
+signal hit
+
+@export var speed = 400 #How fast player walks  pixels/sec
+var screen_size #Size of game window
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	screen_size = get_viewport_rect().size # this makes it so the player can't move out of view
+
+	
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	
+	
+	var velocity = Vector2.ZERO # Players movement vector
+	
+	
+	#moving in direction of axis depending on what key is pressed
+	if Input.is_action_pressed("move_right"):
+		velocity.x += 1
+	if Input.is_action_pressed("move_left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("move_down"):
+		velocity.y += 1
+	if Input.is_action_pressed("move_up"):
+		velocity.y -= 1
+	
+	#makes diagonal moving the same speed instead of faster
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * speed
+
+	#moves character based on Vector2 from above inputs	
+	position += velocity * delta
+	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	#NOTE when we make the variable for velocity we use Vector2.ZER0 so we can get a vector variable type and make it 0, 0  (x and y coordinates)
+	#position is an already made class that places what ever node it's script is attached to. we change the position by multiplying the velocity var that we
+	#change by either adding 1 or - 1 to x or y depending on what input is pressed IE up, down, left right
+	#so we just use velocity to get coordinates to feed to position so we can move
+	
+	
+	#animation that will play depending on where player is walking
+	if velocity.x == 0 and velocity.y == 0: 
+		$AnimatedSprite2D.play("idle")
+	elif velocity.y < 0:
+		$AnimatedSprite2D.animation = "up"
+	elif velocity.y > 0:
+		$AnimatedSprite2D.animation = "down"#down had to be seperate animation due to the art needing the eye to look down and you cant flip it or the legs would be on top
+	elif velocity.x != 0:
+		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	
+
+	
+
+
+func _on_body_entered(body): #will call when 2D  bodys pass the collision shape of player
+	hide() # Player disappears after being hit
+	hit.emit()
+	$CollisionShape2D.set_deffered("disabled", true) #what the fuck? this prevents error that happens when collision occurs while engine is processing collisions idk why but use for now
