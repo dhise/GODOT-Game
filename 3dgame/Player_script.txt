@@ -1,3 +1,4 @@
+
 #TODO I want to add health to player so that he can take hits before dying as of right now the player scene is completely finished and the game plays start to finish from scoring to dying
 #Includes an image of scene branch at the bottom
 
@@ -96,6 +97,8 @@ func _on_mob_detector_body_entered(body):
 #end of player script 
 
 #image of player nodes
+
+
 
 ![playernodes](https://github.com/dhise/GODOT-Game/assets/10970185/fb1914d6-1b57-477d-be7a-b84c98861021)
 
