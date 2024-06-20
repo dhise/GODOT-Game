@@ -97,7 +97,7 @@ func _on_mob_detector_body_entered(body):
 
 #image of player nodes
 
-https://raw.githubusercontent.com/dhise/GODOT-Game/main/3dgame/playernodes.png
+https://i.imgur.com/s2zmrGf.png
 
 
 
