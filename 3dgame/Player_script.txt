@@ -97,7 +97,7 @@ func _on_mob_detector_body_entered(body):
 
 #image of player nodes
 
-https://i.imgur.com/s2zmrGf.png
+3dgame/playernodes.png
 
 
 
